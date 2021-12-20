@@ -1,0 +1,152 @@
+﻿@model ClientWebApp.Models.EditViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="card card-header" style="box-shadow:3px 1px 1px 0 gray; border-radius:2px;">
+        <span style="font-weight:bold;">
+            <i class="glyphicon glyphicon-edit"></i>
+            فرم ویرایش کاربر
+        </span>
+    </div>
+
+    <div class="card card-body container-fluid" style="border-radius:2px; box-shadow:3px 1px 1px 0 gray; background-color:#e6e2e2;">
+        <form class="row" asp-controller="UserManager" asp-action="Edit" method="post" enctype="multipart/form-data">
+
+
+            <div class="col-md-5 col-xs-12">
+                <input asp-for="Id" type="hidden" />
+                <!--UserName-->
+                <div>
+                    <label asp-for="UserName" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <input asp-for="UserName" type="text" class="form-control custominput" placeholder="نام کاربری ..." autocomplete="on" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!--FirstName-->
+                <div>
+                    <label asp-for="FirstName" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <input asp-for="FirstName" type="text" class="form-control custominput" placeholder="نام کوچک ..." autocomplete="on" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!--LastName-->
+                <div>
+                    <label asp-for="LastName" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <input asp-for="LastName" type="text" class="form-control custominput" placeholder="نام خانوادگی ..." autocomplete="on" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!--FatherName-->
+                <div>
+                    <label asp-for="FatherName" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <input asp-for="FatherName" type="text" class="form-control custominput" placeholder="نام پدر ..." autocomplete="on" />
+                        <span asp-validation-for="FatherName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!--mellicode-->
+                <div>
+                    <label asp-for="Code" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <input asp-for="Code" type="text" class="form-control custominput" placeholder="کد ملی ..." autocomplete="on" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!--mobile-->
+                <div>
+                    <label asp-for="PhoneNumber" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <input asp-for="PhoneNumber" type="text" class="form-control custominput" placeholder="شماره موبایل ..." autocomplete="on" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <!--IsAdmin-->
+                <div>
+                    <label asp-for="Role" class="control-label col-md-3 col-xs-12" style="margin-top:10px;"></label>
+                    <div class="col-md-9 col-xs-12" style="margin-top:10px;">
+                        <label class="col-md-3 col-xs-6">
+
+                            <input asp-for="Role" type="radio" name="Role" value="Administrator" checked />
+                            ادمین
+                        </label>
+                        <label class="col-md-3 col-xs-6">
+                            <input asp-for="Role" type="radio" name="Role" value="User" />
+                            کاربر
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-5 col-xs-12">
+
+                <!--userImage-->
+                <div>
+                    <label asp-for="Image" class="control-label col-md-3 col-xs-12"></label>
+                    <div class="col-md-9 col-xs-12">
+                        <div class="col-md-6">
+                            <div class="form-horizontal">
+                                <label for="Image" class="btn" style="width:145px; height:30px; margin-bottom:5px; border-radius:3px;
+                                        border:1px solid gray;">
+                                    انتخاب تصویر
+                                    <i class="icon-file-picture"></i>
+                                </label>
+                                <input asp-for="Image" type="file" accept=".jpg, .png, .tif, .tiff, .jpeg" style="visibility:hidden" onchange="showpic(this)" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="image-holder" class="img-responsive"> </div>
+                            <div id="current-image">
+                                <img id="imguserimage" src="data:image/png;base64 , @(ClientWebApp.Common.ConvertApp.ToBase64String(Model.Image))"
+                                     style="height:130px; width:110px; margin:5px auto; border:1px solid gray; background-size:100%; " />
+                            </div>
+                        </div>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 form-group" style="margin-top:15px;">
+                <input type="submit" style="border:1px solid gray; border-radius:3px;"
+                       value="ویرایش کاربر" class="btn pull-left" />
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+<script>
+    function showpic(input) {
+        if (input.files && input.files[0]) {
+            var ImageDir = new FileReader();
+            var image_holder = $("#image-holder");
+            var current_image = $("#current-image");
+            image_holder.empty();
+            current_image.empty();
+            ImageDir.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "img-responsive",
+                    "runat": "server",
+                    "style": "height:130px; width:110px; margin:5px auto; border:1px solid gray; background-size:100%; "
+                }).appendTo(image_holder);                
+            }
+            ImageDir.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "UserList";
+
+}
+
+@model ReflectionIT.Mvc.Paging.PagingList<ApiUser>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+<div class="table-responsive row">
+
+    <form method="get" class="form-inline">
+        <input name="filter" class="form-control" placeholder="filter"
+               value="@Model.RouteValue["filter"]" />
+        <button type="submit" class="btn btn-info">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+        </button>
+    </form>
+
+    <nav aria-label="ApiUser navigation example">
+        <vc:pager paging-list="@Model" />
+    </nav>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.SortableHeaderFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.SortableHeaderFor(model => model.LastName)
+                </th>
+                
+                <th>نام کاربری</th>
+                <th>نام پدر</th>
+                <th>کد ملی</th>
+                <th>موبایل</th>
+                <th>تصویر</th>
+                <th>کاربر ثبت کننده</th>
+                <th>عملیات</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="font-size:16px;">
+
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.FatherName</td>
+                    <td>@item.Code</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>
+                        <img width="30" src="data:image/png;base64 , @item.Image " alt="" />
+                    </td>
+                    <td>@item.CreatorUserName</td>
+                    <td>
+                        <div class="row">
+                            <a asp-controller="UserManager" asp-action="Edit" asp-route-id="@item.Id"
+                               style="height:30px; width:40px; font-size:15px; margin-bottom:3px;"
+                               class="btn customYellow1">
+                                <i class="fa fa-edit"></i>
+                            </a>
+
+                            <a asp-controller="UserManager" asp-action="Delete" asp-route-id="@item.Id"
+                               style="height: 30px; width: 40px; font-size: 14px; margin-bottom: 3px; margin-right: 5px;"
+                               class="btn customRed1">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+    <nav class="pagenav" style="text-align:center;">
+        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+    </nav>
+</div>
+

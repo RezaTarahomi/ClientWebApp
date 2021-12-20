@@ -1,0 +1,66 @@
+﻿@model ClientWebApp.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LoginLayout";
+}
+<div class="card card-body col-md-3 col-xs-12" style="margin:0 auto; text-align:center; background-color:whitesmoke;
+    border-radius:5px; box-shadow:6px 6px 3px 0 gray;">
+    <div class="modal-body">
+
+
+        <div style="text-align:center; font-weight:bold;">
+            فرم ورود به سیستم
+        </div>
+
+        <hr style="height:1px; background-color:gray; width:100%;" />
+
+        <div class="col-xs-12 col-md-12 alert" style="text-align:center; background-color:#aec6f6;">
+            <span>Client Application</span>
+        </div>
+
+        <form asp-controller="Account" asp-action="Login" method="post">
+            
+            <!--نام کاربری-->
+            <div class="form-group col-xs-12 col-md-12">
+                <div class="input-group">
+
+                    <i class="fa fa-user-o" style="font-size:25px; padding-top:6px; padding-left:1px;
+                                padding-right:1px; margin-left:0px; border:1px solid #ced4da; border-radius:0 5px 5px 0;"></i>
+
+                    <input asp-for="UserName" type="text" class="form-control" autocomplete="off" style="text-align:center; font-weight:bold;
+                        border-radius:5px 0 0 5px;" placeholder="نام کاربری" />
+                </div>
+                <span asp-validation-for="UserName" class="text-danger" style=" margin-top:10px"  ></span>
+            </div>
+
+            <!--رمز عبور-->
+            <div class="form-group col-xs-12 col-md-12" style="margin-bottom: 30px; margin-top: 10px">
+                <div class="input-group">
+
+                    <i class="fa fa-user-secret" style="font-size:25px; padding-top:6px; padding-left:1px;
+                                padding-right:1px; margin-left:0px; border:1px solid #ced4da; border-radius:0 5px 5px 0;"></i>
+
+                    <input asp-for="Password" type="password" class="form-control" autocomplete="off" style="text-align:center; font-weight:bold;
+                        border-radius:5px 0 0 5px;" placeholder="رمز عبور" />
+                </div>
+                <span asp-validation-for="Password" class="text-danger" style=""></span>
+            </div>
+
+            <br />
+            <!--دکمه ورود-->
+            <div class="form-group col-xs-12">
+                <div>
+                    <input type="submit" class="btn btn-dark center-block" value="ورود به سامانه" />
+                </div>
+               
+            </div>
+        </form>
+
+        <div style="height:100px" padding:10px;">
+
+        </div>
+
+
+    </div>
+</div>
